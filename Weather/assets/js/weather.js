@@ -35,8 +35,11 @@ function showPosition(position) {
 	console.log(position.coords.longitude);
 	$.getJSON('https://fcc-weather-api.glitch.me/api/current?lat='+String(position.coords.latitude)+'&lon='+String(position.coords.longitude), function(data) {
 		$("span").text(String(data["main"]["temp"]));
-		$("#condition").text(String(data["weather"]["main"]));
-		$("#icon").html("<img src="+String(data["weather"]["icon"])+">");
+		console.log();
+		$("#condition").text(String(data["weather"][0]["main"]));
+		$("#icon").html("<img src="+String(data["weather"][0]["icon"])+">");
+		var iconString = "wi wi-day-"+String(data["weather"][0]["description"]);
+		$("#icon").html("<i class='"+iconString+"'></i>");
 	});
 }
 
