@@ -1,0 +1,58 @@
+body {
+	background-color: black;
+	height: 100%;
+	margin: 0;
+	width: 100%;
+	transition: all 1s;
+}
+h1 {
+	font-weight: normal;
+	font-family: 'Pacifico', cursive;
+	margin: 0;
+	transition: all 1s;
+}
+
+html {
+	height: 100%;
+}
+
+a {
+	display: inline-block;
+	background-color: black;
+	color: white;
+	height: 100%;
+	float: left;
+	margin-right: 5px;
+	width: 10%;
+	border-radius: 50%;
+	margin-bottom: 2px;
+}
+
+button {
+	border: none;
+	height: 100%;
+	outline: none;
+	background-color: black;
+	color: white;
+	float: right;
+}
+
+#container {
+	width: 25%;
+	background-color: white;
+	margin: 15% auto;
+	padding: 2% 2%;
+	text-align: center;
+}
+
+#commands {
+	height: 30px;
+	text-align: center;
+	padding: 5%;
+}
+#author {
+	margin: 4%;
+	height: 10%;
+
+}
+
