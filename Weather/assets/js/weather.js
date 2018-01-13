@@ -36,7 +36,13 @@ function showPosition(position) {
 		$("span").text(String(data["main"]["temp"]));
 		$("#condition").text(String(data["weather"][0]["main"]));
 		$("#icon").html("<img src="+String(data["weather"][0]["icon"])+">");
-		var iconString = "wi wi-day-"+String(data["weather"][0]["description"]);
+		if (data["weather"][0]["description"]==='smoke') {
+			var iconString = "wi wi-"+String(data["weather"][0]["description"]);
+		}
+		else {
+			var iconString = "wi wi-day-"+String(data["weather"][0]["description"]);	
+		}
+		
 		$("#icon").html("<i class='"+iconString+"'></i>");
 	});
 }

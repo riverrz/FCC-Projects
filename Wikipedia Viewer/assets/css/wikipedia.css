@@ -1,0 +1,40 @@
+body {
+	background-color: #092B40;
+	height: 100%;
+	color: white;
+	font-size: 24px;
+}
+
+html {
+	height: 100%;
+}
+a {
+	text-decoration: none;
+	color: white;
+}
+
+ul {
+	display: none;
+	list-style: none;
+}
+input {
+	height: 100%;
+}
+
+button {
+	margin-left: 3px;
+	border: none;
+	background-color: inherit;
+	outline: none;
+	color: white;
+	height: 100%;
+}
+
+.shift {
+	padding-top: 20%;
+}
+#container	{
+	text-align: center;
+	width: 100%;
+	margin: auto;
+}
