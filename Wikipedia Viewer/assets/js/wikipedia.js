@@ -14,7 +14,6 @@ $("input").on("keypress", function(event) {
 			});
 		}
 	}
-	
 });
 
 $("button").on("click" , function() {
