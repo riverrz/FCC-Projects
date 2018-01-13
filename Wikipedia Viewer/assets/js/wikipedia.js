@@ -2,7 +2,9 @@ $("input").on("keypress", function(event) {
 	if (event.which === 13) {
 		if ($(this).val()!=="") {
 			$("#container").removeClass("shift");
-			$("li").remove();
+			$("ul").fadeOut(100, function() {
+				$("li").remove();
+			});
 			$("#text").addClass("hide");
 			$.ajax({
 				url: 'http://en.wikipedia.org/w/api.php',
@@ -27,7 +29,10 @@ $("button").on("click" , function() {
 
 function processResult(apiResult) {
 	for (var i=0;i<apiResult.query.search.length; i++) {
-		$("ul").append("<li><h1>"+apiResult.query.search[i].title+ '</h1>'+ apiResult.query.search[i].snippet+'</li>');
+		// $("ul").append("<li><h1>"+apiResult.query.search[i].title+ '</h1>'+ apiResult.query.search[i].snippet+'</li>');
+		var url="http://en.wikipedia.org/?curid="+apiResult.query.search[i].pageid;
+		var a="<a href="+"'"+url+"'"+ " target='_blank'>";
+		$("ul").append("<li>"+a+"<h1>"+apiResult.query.search[i].title+ '</h1>'+ apiResult.query.search[i].snippet+'</a></li>');
 	}
 
 	$("ul").show("blind" ,"slow");
