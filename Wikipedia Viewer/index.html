@@ -4,12 +4,16 @@
 	<title>Wikipedia viewer</title>
 	<link rel="stylesheet" type="text/css" href="assets/css/wikipedia.css">
 	<script type="text/javascript" src="assets/js/lib/jquery-3.2.1.min.js"></script>
+	<script
+			  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+			  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+			  crossorigin="anonymous"></script>
 </head>
 <body>
 	<div id="container" class="shift">
 		<p><a href="https://en.wikipedia.org/wiki/Special:Random" target="_blank" title="random article">Click here for a random article</a></p>
 		<div id="search-field"><input type="text" name="search"> <button id="clear">X</button></div>
-		<p>Type in search bar and enter to search</p>
+		<p id="text">Type in search bar and enter to search</p>
 
 		<ul id="result"></ul>
 	</div>

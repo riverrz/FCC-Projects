@@ -16,9 +16,22 @@ a {
 ul {
 	display: none;
 	list-style: none;
+	font-size: 14px;
+	text-align: left;
 }
 input {
 	height: 100%;
+}
+h1 {
+	font-size: 20px;
+}
+
+li {
+	background-color: #E7E7E8;
+	color: black;
+	padding: 1.5%;
+	margin: 10px 10%;
+	width: 80%;
 }
 
 button {
@@ -30,8 +43,14 @@ button {
 	height: 100%;
 }
 
+li:hover {
+	border-left: 3px solid orange;
+}
 .shift {
 	padding-top: 20%;
+}
+.hide {
+	display: none;
 }
 #container	{
 	text-align: center;
