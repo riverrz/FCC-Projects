@@ -8,7 +8,10 @@ ul {
 h1 {
 	margin-left: 3%;
 }
-
+img {
+	width: 40px;
+	height: 40px;
+}
 .container {
 	background-color: gray;
 	width: 40%;
@@ -22,10 +25,10 @@ h1 {
 	float: left;
 	width: 20%;
 	text-align: center;
-	padding-top: 20px;
+	padding-top: 3%;
 }
 .name {
-	padding-top: 20px;
+	padding-top: 5%;
 	display: inline-block;
 	height: 100%;
 	float: left;
@@ -33,7 +36,7 @@ h1 {
 	text-align: center;
 }
 .status {
-	padding-top: 20px;
+	padding-top: 5%;
 	display: inline-block;
 	height: 100%;
 	float: right;
