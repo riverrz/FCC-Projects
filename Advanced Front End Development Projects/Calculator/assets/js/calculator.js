@@ -10,6 +10,8 @@ var index=null;
 
 
 var ac=document.querySelector("#AC")
+var ce=document.querySelector("#CE");
+
 for (var i=0 ; i<numbers.length;i++) {
 	numbers[i].addEventListener("click", function() {
 		show(this.textContent);
@@ -23,54 +25,62 @@ ac.addEventListener("click", function() {
 	second=null;
 	index=null;
 });
+ce.addEventListener("click", function() {
+	pressed.textContent="0";
+	calculate.textContent="0";
+	first=null;
+	second=null;
+	index=null;
+});
 
 for (var j=0;j<operators.length;j++) {
 	operators[j].addEventListener("click", function() {
-		if (first!=null && index!=null) {
-			first=Number(evaluate().toFixed(1));
+		if (first!=null && index!=null && index!=calculate.textContent.length-1) {
+			first=Number(evaluate());
 			calculate.textContent = String(first);
+		}
+		else if (first!=null && index===calculate.textContent.length-1){
+			calculate.textContent = calculate.textContent.slice(0,index);	
 		}
 		else {
 			first=Number(calculate.textContent);	
 		}
-		index=calculate.textContent.length-1;
 		show(this.textContent);
+		index=calculate.textContent.length-1;
 	});
 }
 
 result.addEventListener("click", function() {
-	pressed.textContent=evaluate().toFixed(1);
+	pressed.textContent=evaluate();
 	if (String(first).indexOf(".")===-1 && String(second).indexOf(".")===-1) {
-		pressed.textContent=String(Math.round(Number(pressed.textContent)));
+		pressed.textContent=String(Number(pressed.textContent)).slice(0,8);
 	}
 	calculate.textContent= pressed.textContent;
 	index=null;
 });
 
 function evaluate() {
-	second=Number(calculate.textContent.slice(index+2));
-	var operation=calculate.textContent[index+1];
-	// check();
+	second=Number(calculate.textContent.slice(index+1));
+	var operation=calculate.textContent[index];
 	var ans=0;
+	var cf=10*(calculate.textContent.length-1 - index);
 	switch (operation) {
 		case "+":
-			ans=first+second;
+			ans=((first*cf)+(second*cf))/cf;
 			break;
 		case "-":
-			ans=first-second
+			ans=((first*cf)-(second*cf))/cf;
 			break;
 		case "x":
-			ans=first*second;
+			ans=((first*cf)*(second*cf))/(cf**2)
 			break;
 		case "/":
-			ans=first/second;
+			ans=((first*cf)/(second*cf));
 			break;
 	}
 	return(ans);
 }
 
-
-// function check()
 
 function show(a) {
 	pressed.textContent=String(a);
