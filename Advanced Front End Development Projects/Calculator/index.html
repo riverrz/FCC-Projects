@@ -4,10 +4,9 @@
 	<title>Calculator</title>
 	<link rel="stylesheet" type="text/css" href="assets/css/lib/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/calculator.css">
+	<link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet"> 
 </head>
 <body>
-	<h1>Calculator</h1>
-
 	<div class="face">
 		<p>ELECTRONIC CALCULATOR</p>
 		<div id="display">
@@ -16,8 +15,8 @@
 		</div>
 		<div class="container">
 			<div class="row">
-				<div class="icons col-xs-2"><button id="AC">AC</button></div>
-				<div class="icons col-xs-2"><button id="CE">CE</button></div>
+				<div class="icons col-xs-2"><button class="red" id="AC">AC</button></div>
+				<div class="icons col-xs-2"><button id="CE" class="red" >CE</button></div>
 				<div class="icons col-xs-2"><button class="operator">/</button></div>
 				<div class="last icons col-xs-2"><button class="operator">x</button></div>
 			</div>
@@ -37,11 +36,12 @@
 				<div class="icons col-xs-2"><button class="numbers">1</button></div>
 				<div class="icons col-xs-2"><button class="numbers">2</button></div>
 				<div class="icons col-xs-2"><button class="numbers">3</button></div>
-				<div class="vertical last icons col-xs-2"><button id="result">=</button></div>
+				<div class="last icons col-xs-2"><button id="result" class="green">=</button></div>
 			</div>
 			<div class="row">
 				<div class="horizontal icons col-xs-2"><button class="numbers">0</button></div>
 				<div class="icons col-xs-2"><button class="numbers">.</button></div>
+				<div class="sign col-xs-2">SK</div>
 			</div>
 		</div>
 	</div>

@@ -1,6 +1,8 @@
 body {
-	background-color: #818181;
-
+	background: #000000;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #434343, #000000);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #434343, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	font-family: 'Orbitron', sans-serif;
 }
 
 h1 {
@@ -8,10 +10,9 @@ h1 {
 }
 p {
 	margin: 0;
+	color: white;
 }
-.pressed {
-	font-size: 30px;
-}
+
 button{
 	display:inline-block;
 	background-color: inherit;
@@ -21,11 +22,27 @@ button{
 	height: 100%;
 	width: 100%;
 	border-radius: 15%;
+	box-shadow: 0 3px #999;
+}
+button:active {
+	box-shadow: 0 1px #666;
+	transform: translateY(2px);
+}
+.pressed {
+	font-size: 30px;
+}
+.sign {
+	background-color: none !important;
+	color: white;
+	margin: 13px 0;
+	display: inline-block;
+	font-size: 20px;
+	padding: 1%;
 }
 .face {
 	width: 270px;
 	height: 360px;
-	background-color: #d5e1df;
+	background-color: rgb(77, 77, 77);
 	margin: 100px 42%;
 	border-radius: 5%;
 	padding: 15px 10px;
@@ -40,9 +57,7 @@ button{
 .horizontal {
 	width: 111.106px !important;
 }
-/*.vertical {
-	height: 78px !important;
-}*/
+
 
 .current {
 	width: 100%;
@@ -56,16 +71,25 @@ button{
 }
 .icons {
 	margin: 8px 0;
-	background-color: #454140;
 	height: 35px;
-	/*padding: 7px 5px 5px 5px;*/
 	padding: 0;
 	color: white;
 	margin-right: 27.786px;
 	border-radius: 15%;
 	text-align: center;
 }
-
+.numbers {
+	background-color: rgb(23, 103, 130);
+}
+.operator {
+	background-color: rgb(23, 23, 130);
+}
+.red {
+	background-color: rgb(130, 23, 23);
+}
+.green {
+	background-color: rgb(50, 130, 23);
+}
 #display {
 	width: 250px;
 	background-color: #c4b7a6;

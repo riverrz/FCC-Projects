@@ -3,7 +3,7 @@ var pressed=document.querySelector(".pressed");
 var calculate= document.querySelector("#calculate");
 var operators =document.querySelectorAll(".operator");
 var result = document.querySelector("#result");
-
+var sign=document.querySelector(".sign");
 var first=null;
 var second=null;
 var index=null;
@@ -12,11 +12,7 @@ var index=null;
 var ac=document.querySelector("#AC")
 var ce=document.querySelector("#CE");
 
-for (var i=0 ; i<numbers.length;i++) {
-	numbers[i].addEventListener("click", function() {
-		show(this.textContent);
-	});
-}
+
 
 ac.addEventListener("click", function() {
 	pressed.textContent="0";
@@ -32,6 +28,15 @@ ce.addEventListener("click", function() {
 	second=null;
 	index=null;
 });
+sign.addEventListener("click", function() {
+	alert("Made By - Shivam Kumar");
+});
+
+for (var i=0 ; i<numbers.length;i++) {
+	numbers[i].addEventListener("click", function() {
+		show(this.textContent);
+	});
+}
 
 for (var j=0;j<operators.length;j++) {
 	operators[j].addEventListener("click", function() {
