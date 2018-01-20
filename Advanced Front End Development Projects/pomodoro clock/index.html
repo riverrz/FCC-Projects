@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pomodoro Clock</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/pomodoro.css">
+	<script type="text/javascript" src="assets/js/lib/jquery-3.2.1.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet"> 
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+	<h1>Pomodoro clock <i class="fa fa-clock-o" aria-hidden="true"></i>
+</h1>
+	<div class="set">
+		<div class="break">
+			<p>BREAK LENGTH</p>
+			<button id="breaksub">-</button><span id="breaklen" class="big">1</span><button id="breakadd">+</button>
+		</div>
+		<button id="start" class="paddingTop">Start</button>
+		<button id="pause" class="paddingTop">Pause</button>
+		<div class="session">
+
+			<p>SESSION LENGTH</p>
+			<button id="sessionsub">-</button><span id="sessionlen" class="big">1</span><button id="sessionadd">+</button>
+		</div>
+
+	</div>
+	<div class="wrap">
+		<div id="clock">
+			<div class="content">Session</div>
+			<div id="timer"><span id="minute">1</span>:<span id="second2">0</span><span id="second1">0</span></div>
+			<div class="fill"></div>
+		</div>		
+	</div>
+	<script type="text/javascript" src="assets/js/pomodoro.js"></script>
+</body>
+</html>
