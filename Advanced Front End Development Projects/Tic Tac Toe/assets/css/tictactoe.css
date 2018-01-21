@@ -1,0 +1,46 @@
+body {
+	font-size: 24px;
+}
+
+button {
+	border: none;
+	width: 50%;
+	background-color: inherit;
+	outline: none;
+	display: inline-block;
+	cursor: pointer;
+	margin-top: 20px;
+	font-size: inherit;
+}
+button:hover {
+	border: 1px dashed black;
+}
+.text {
+	width: 100%;
+	
+}
+.firstPage {
+	transition: 1s all;
+}
+.container {
+	width: 300px;
+	height: 300px;
+	margin: 250px auto;
+	background-color: rgba(240,180,135,1);
+	border-radius: 5%;
+	padding: 20px;
+
+}
+.board {
+	display: block;
+	background-color: green;
+	height: 100%;
+	margin: 0;
+	text-align: center;
+	position: relative;
+	padding: 0;
+
+}
+#pickPage {
+	display: none;
+}

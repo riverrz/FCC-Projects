@@ -25,6 +25,7 @@ button {
 	border: none;
 	outline: none;
 	font-size: 30px;
+	cursor: pointer;
 }
 .paddingTop {
 	margin-top: 40px;
