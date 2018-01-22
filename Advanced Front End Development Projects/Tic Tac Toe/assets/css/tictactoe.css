@@ -12,6 +12,12 @@ button {
 	margin-top: 20px;
 	font-size: inherit;
 }
+h1 {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	font-weight: normal;
+}
 button:hover {
 	border: 1px dashed black;
 }
@@ -41,6 +47,36 @@ button:hover {
 	padding: 0;
 
 }
+.tile {
+	width: 32.5%;
+	float: left;
+	height: 32.5%;
+}
+.right {
+	border-right: 2px solid black;
+}
+.bottom {
+	border-bottom: 2px solid black;
+}
+.results {
+	height: 100%;
+	width: 100%;
+	padding-top: 20%;
+	opacity: 0.8;
+	background-color: gray;
+	position: absolute;
+}
+#tiles {
+	width: 75%;
+	position: absolute;
+	height: 75%;
+	display: none;
+	margin: 12.5% 12.5%;
+	padding: auto;
+	text-align: center;
+}
+
+
 #pickPage {
 	display: none;
 }
