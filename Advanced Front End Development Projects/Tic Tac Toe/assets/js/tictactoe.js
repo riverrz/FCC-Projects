@@ -6,7 +6,7 @@ var allTiles = $(".tile");
 var currentPlayer="Player 1";
 var player1Tiles={};
 var player2Tiles={};
-
+var ans=false;
 $(".players").click(function() {
 	$("#firstPage").fadeOut(500, function() {
 		$("#pickPage").fadeIn(500);
@@ -76,13 +76,13 @@ allTiles.click(function() {
 		player2Tiles[$(this).attr("id")]=1;
 		currentPlayer= "Player 1";
 	}
-
-	if (totalMoves===9) {
+	ans=checkResult();	
+	if (!ans && totalMoves===9) {
 		player1Tiles={};
 		player2Tiles={};
 		$(".results").empty();
-		$(".results").fadeIn(600,function() {
-			$(this).append("It's a Draw");	
+		$(".results").fadeIn(300,function() {
+			$(this).append("Uuh... it's a Draw");	
 			$(this).fadeOut(1600, function() {
 				allTiles.empty();
 				totalMoves=0;
@@ -92,9 +92,6 @@ allTiles.click(function() {
 			});
 		});
 
-	}
-	else {
-		checkResult();	
 	}
 	
 });
@@ -110,7 +107,7 @@ function checkResult() {
 			$(".results").fadeIn(800);
 			$(".results").append("Player 1 Won :D");
 			$(".results").append('<button class="reset">Play Again?</button>');
-			return;
+			return true;
 
 		}
 	}
@@ -120,9 +117,10 @@ function checkResult() {
 			$(".results").fadeIn(800);
 			$(".results").append("Player 2 Won :D");
 			$(".results").append('<button class="reset">Play Again?</button>');
-			return;
+			return true;
 		}	
 	}
+	return false;
 }
 
 function checkHorizontal(y,x) {
@@ -166,6 +164,7 @@ function checkHorizontal(y,x) {
 			return false;
 		}
 	}
+	return false;
 }
 
 function checkVertical(y,x) {
@@ -209,6 +208,7 @@ function checkVertical(y,x) {
 			return false;
 		}
 	}
+	return false;
 }
 
 function mainDiagnol(y,x) {
@@ -252,6 +252,7 @@ function mainDiagnol(y,x) {
 			return false;
 		}
 	}
+	return false;
 }
 
 function invDiagnol(y,x) {
@@ -295,4 +296,5 @@ function invDiagnol(y,x) {
 			return false;
 		}
 	}
+	return false;
 }

@@ -8,6 +8,7 @@ body {
 	background-size: cover;
 	height: 100%;
 	margin: 0;
+	font-family: 'Montserrat', sans-serif;
 }
 
 button {
@@ -19,6 +20,7 @@ button {
 	cursor: pointer;
 	margin-top: 20px;
 	font-size: inherit;
+	font-family: inherit;
 }
 h1 {
 	margin: 0;
@@ -26,9 +28,7 @@ h1 {
 	width: 100%;
 	font-weight: normal;
 }
-button:hover {
-	border: 1px dashed black;
-}
+
 p {
 	margin: 0 0 10px 0;
 	width: 100%;
@@ -43,14 +43,14 @@ p {
 	height: 300px;
 	margin: 200px 530px ;
 	/*background-color: rgba(240,180,135,1);*/
-	background-color: 	rgb(122, 122, 82);
+	background-color: #505050;
 	border-radius: 5%;
 	padding: 20px;
 	position: absolute;
 }
 .board {
 	display: block;
-	background-color: #79d2a6;
+	background-color: #909090;
 	height: 100%;
 	margin: 0;
 	text-align: center;
@@ -90,7 +90,7 @@ p {
 	height: 20%;
 	padding-top: 7%;
 	color: white;
-	background-color: black;
+	background-color: #686868;
 }
 #player1 {
 	float: left;
