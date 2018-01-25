@@ -4,10 +4,8 @@ var currentmark=null;
 var totalMoves=0;
 var allTiles = $(".tile");
 var currentPlayer="Player 1";
-
 var player1Tiles={};
 var player2Tiles={};
-
 
 $(".players").click(function() {
 	$("#firstPage").fadeOut(500, function() {
@@ -31,7 +29,7 @@ $(".mark").click(function() {
 	}
 	$("#pickPage").fadeOut(500, function() {
 		$("#tiles").fadeIn(500, function() {
-			$("#currentPlayer").text(currentPlayer);
+			$("#player1").slideDown("slow");
 		});	
 	});
 	currentmark=player1mark;
@@ -45,6 +43,7 @@ $(".results").on("click",".reset",function() {
 	currentPlayer="Player 1";
 	player1Tiles={};
 	player2Tiles={};
+	$(".playerBanner").slideUp("slow");
 	$(".results").fadeOut(500, function() {
 		$("#tiles").fadeOut(300, function() {
 			allTiles.empty();
@@ -66,14 +65,17 @@ allTiles.click(function() {
 
 
 	if (currentPlayer==="Player 1") {
+		$("#player2").slideDown("slow");
+		$("#player1").slideUp("slow");
 		player1Tiles[$(this).attr("id")]=1;
 		currentPlayer = "Player 2";
 	}
 	else {
+		$("#player1").slideDown("slow");
+		$("#player2").slideUp("slow");
 		player2Tiles[$(this).attr("id")]=1;
 		currentPlayer= "Player 1";
 	}
-	$("#currentPlayer").text(currentPlayer);
 
 	if (totalMoves===9) {
 		player1Tiles={};
@@ -119,10 +121,7 @@ function checkResult() {
 			$(".results").append("Player 2 Won :D");
 			$(".results").append('<button class="reset">Play Again?</button>');
 			return;
-		}
-		
-		
-		
+		}	
 	}
 }
 
