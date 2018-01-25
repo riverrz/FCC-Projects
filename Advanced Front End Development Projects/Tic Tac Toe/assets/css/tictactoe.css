@@ -1,5 +1,8 @@
 body {
 	font-size: 24px;
+	background: url("http://www.pptbackgrounds.org/uploads/tic-tac-toe-backgrounds-wallpapers.jpg");
+	background-size: cover;
+	
 }
 
 button {
@@ -21,6 +24,10 @@ h1 {
 button:hover {
 	border: 1px dashed black;
 }
+p {
+	margin: 0 0 10px 0;
+	width: 100%;
+}
 .text {
 	width: 100%;
 	
@@ -31,10 +38,12 @@ button:hover {
 .container {
 	width: 300px;
 	height: 300px;
-	margin: 250px auto;
+	margin: 200px 530px ;
 	background-color: rgba(240,180,135,1);
 	border-radius: 5%;
 	padding: 20px;
+	position: absolute;
+	
 
 }
 .board {
@@ -61,17 +70,23 @@ button:hover {
 .results {
 	height: 100%;
 	width: 100%;
-	padding-top: 20%;
 	opacity: 0.8;
+	padding-top: 40%;
 	background-color: gray;
 	position: absolute;
+	display: none;
+	box-sizing: border-box;
+	color: white;
+}
+.reset {
+	color: white;
 }
 #tiles {
 	width: 75%;
 	position: absolute;
 	height: 75%;
 	display: none;
-	margin: 12.5% 12.5%;
+	margin: 0 12.5% 10% 12.5%;
 	padding: auto;
 	text-align: center;
 }
