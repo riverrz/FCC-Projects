@@ -80,6 +80,7 @@ allTiles.click(function() {
 	if (!ans && totalMoves===9) {
 		player1Tiles={};
 		player2Tiles={};
+		$(".playerBanner").slideUp("fast");
 		$(".results").empty();
 		$(".results").fadeIn(300,function() {
 			$(this).append("Uuh... it's a Draw");	
@@ -89,6 +90,7 @@ allTiles.click(function() {
 				currentPlayer="Player 1";
 				currentmark=player1mark;
 				$("#currentPlayer").text(currentPlayer);
+				$("#player1").slideDown("slow");
 			});
 		});
 
@@ -107,6 +109,7 @@ function checkResult() {
 			$(".results").fadeIn(800);
 			$(".results").append("Player 1 Won :D");
 			$(".results").append('<button class="reset">Play Again?</button>');
+			$(".playerBanner").slideUp("fast");
 			return true;
 
 		}
@@ -117,6 +120,7 @@ function checkResult() {
 			$(".results").fadeIn(800);
 			$(".results").append("Player 2 Won :D");
 			$(".results").append('<button class="reset">Play Again?</button>');
+			$(".playerBanner").slideUp("fast");
 			return true;
 		}	
 	}
