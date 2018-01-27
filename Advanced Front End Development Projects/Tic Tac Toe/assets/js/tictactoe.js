@@ -2,22 +2,31 @@ var player1mark = null;
 var player2mark = null;
 var currentmark=null;
 var totalMoves=0;
-var allTiles = $(".tile");
+var currentPlayMode=null;
 var currentPlayer="Player 1";
 var player1Tiles={};
 var player2Tiles={};
 var ans=false;
+
+var allTiles = $(".tile");
+
+// Opening Page click event
+
 $(".players").click(function() {
+	currentPlayMode=$(this).attr("id");    // To check if 1player or 2players mode
 	$("#firstPage").fadeOut(500, function() {
 		$("#pickPage").fadeIn(500);
 	})
 });
+
 
 $("#goBack").click(function() {
 	$("#pickPage").fadeOut(500, function() {
 		$("#firstPage").fadeIn(500);
 	});
 });
+
+// Decides the playing mark of the players
 
 $(".mark").click(function() {
 	player1mark=$(this).text();
@@ -28,13 +37,16 @@ $(".mark").click(function() {
 		player2mark="O";
 	}
 	$("#pickPage").fadeOut(500, function() {
-		$("#tiles").fadeIn(500, function() {
+		$("#tiles").fadeIn(500, function() {           //Displays the playing board
 			$("#player1").slideDown("slow");
 		});	
 	});
 	currentmark=player1mark;
 	
 });
+
+// For the Play again Button
+
 $(".results").on("click",".reset",function() {
 	player1mark = null;
 	player2mark = null;
@@ -53,18 +65,15 @@ $(".results").on("click",".reset",function() {
 	});
 });
 
+// Work on individual tiles
+
 allTiles.click(function() {
-	$(this).append("<h1>"+currentmark+"</h1>");
-	if (currentmark===player1mark) {
-		currentmark=player2mark;
-	}
-	else {
-		currentmark=player1mark;
-	}
+	
+	
 	totalMoves+=1;
-
-
 	if (currentPlayer==="Player 1") {
+		$(this).append("<h1>"+currentmark+"</h1>");
+		currentmark=player2mark;
 		$("#player2").slideDown("slow");
 		$("#player1").slideUp("slow");
 		player1Tiles[$(this).attr("id")]=1;
@@ -73,7 +82,15 @@ allTiles.click(function() {
 	else {
 		$("#player1").slideDown("slow");
 		$("#player2").slideUp("slow");
-		player2Tiles[$(this).attr("id")]=1;
+		if (currentPlayMode==="2players") {
+			$(this).append("<h1>"+currentmark+"</h1>");
+			player2Tiles[$(this).attr("id")]=1;	
+		}
+		else {
+			generatePosition();     // Generates correct position for the tile and displays it
+		}
+
+		currentmark=player1mark;
 		currentPlayer= "Player 1";
 	}
 	ans=checkResult();	
@@ -301,4 +318,137 @@ function invDiagnol(y,x) {
 		}
 	}
 	return false;
+}
+
+
+function generatePosition() {
+	for (var i=0;i<Object.keys(player1Tiles).length;i++) {
+		if (findHorizontal(Object.keys(player1Tiles)[i]) || findVertical(Object.keys(player1Tiles)[i]) || findDiagnol(Object.keys(player1Tiles)[i]) || findInvDiagnol(Object.keys(player1Tiles)[i])) {
+			return;
+		}
+		if (!(3 in player2Tiles)){
+			$("#3").append("<h1>"+currentmark+"</h1>");
+			player2Tiles["3"]=1;	
+		}
+	}
+}
+
+function findHorizontal(x) {
+	x=Number(x)
+	if (x%3===1) {
+		if (x+1 in player1Tiles && !(x+2 in player2Tiles)) {
+			return putmark(String(x+2));
+		}
+		else if (x+2 in player1Tiles && !(x+1 in player2Tiles)) {
+			return putmark(String(x+1));
+		}
+	}
+	else if (x%3===2) {
+		if (x-1 in player1Tiles && !(x+1 in player2Tiles)) {
+			return putmark(String(x+1));
+		}
+		else if (x+1 in player1Tiles && !(x-1 in player2Tiles)) {
+			return putmark(String(x-1));
+		}
+	}
+	else if (x%3===0) {
+		if (x-1 in player1Tiles && !(x-2 in player2Tiles)) {
+			return putmark(String(x-2));
+		}
+		else if (x-2 in player1Tiles && !(x-1 in player2Tiles)) {
+			return putmark(String(x-1));
+		}
+	}
+
+}
+function findVertical(x) {
+	x=Number(x)
+	if (x===1 || x===2 || x===3) {
+		if (x+3 in player1Tiles && !(x+6 in player2Tiles)) {
+			console.log("yes");
+			return putmark(String(x+6));
+		}
+		else if (x+6 in player1Tiles &&  !(x+3 in player2Tiles)) {
+			return putmark(String(x+3));
+		}	
+	}
+	else if (x===4 || x===5 || x===6) {
+		if (x-3 in player1Tiles && !(x+3 in player2Tiles)) {
+			return putmark(String(x+3));
+		}
+		else if (x+3 in player1Tiles && !(x-3 in player2Tiles)) {
+			return putmark(String(x-3));
+		}
+	}
+	else if (x===7 || x===8 || x===9) {
+		if (x-3 in player1Tiles && !(x+3 in player2Tiles)) {
+			return putmark(String(x+3));
+		}
+		else if (x+3 in player1Tiles && !(x-3 in player2Tiles)) {
+			return putmark(String(x-3));
+		}
+	}
+
+}
+
+function findDiagnol(x) {
+	x=Number(x)
+	if (x===1) {
+		if (5 in player1Tiles && !(9 in player2Tiles)) {
+			return putmark("9");
+		}
+		else if (9 in player1Tiles && !(5 in player2Tiles)) {
+			return putmark("5");
+		}
+	}
+	else if (x===5) {
+		if (1 in player1Tiles && !(9 in player2Tiles)) {
+			return putmark("9");
+		}
+		else if (9 in player1Tiles && !(1 in player2Tiles)) {
+			return putmark("1");
+		}
+	}
+	else if (x===9) {
+		if (5 in player1Tiles && !(1 in player2Tiles)) {
+			return putmark("1");
+		}
+		else if (1 in player1Tiles && !(5 in player2Tiles)) {
+			return putmark("5");
+		}
+	}
+}
+
+function findInvDiagnol(x) {
+	x=Number(x)
+	if (x===3) {
+		if (5 in player1Tiles && !(7 in player2Tiles)) {
+			return putmark("7");
+		}
+		else if (7 in player1Tiles && !(5 in player2Tiles)) {
+			return putmark("5");
+		}
+	}
+	else if (x===5) {
+		if (3 in player1Tiles && !(7 in player2Tiles)) {
+			return putmark("7");
+		}
+		else if (7 in player1Tiles && !(3 in player2Tiles)) {
+			return putmark("3");
+		}
+	}
+	else if (x===7) {
+		if (5 in player1Tiles && !(3 in player2Tiles)) {
+			return putmark("3");
+		}
+		else if (3 in player1Tiles && !(5 in player2Tiles)) {
+			return putmark("5");
+		}
+	}
+}
+
+function putmark(x) {
+	$("#"+x).append("<h1>"+currentmark+"</h1>");
+	player2Tiles[x]=1
+	return true;
 }
