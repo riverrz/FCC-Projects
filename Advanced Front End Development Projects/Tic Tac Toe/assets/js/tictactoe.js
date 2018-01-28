@@ -7,7 +7,7 @@ var currentPlayer="Player 1";
 var player1Tiles={};
 var player2Tiles={};
 var ans=false;
-var cornerTiles=["1","3","7","9"];
+var completeTiles=["1","2","3","4","5","6","7","8","9"];
 
 var allTiles = $(".tile");
 
@@ -56,6 +56,7 @@ $(".results").on("click",".reset",function() {
 	currentPlayer="Player 1";
 	player1Tiles={};
 	player2Tiles={};
+	completeTiles=["1","2","3","4","5","6","7","8","9"];
 	$(".playerBanner").slideUp("slow");
 	$(".results").fadeOut(500, function() {
 		$("#tiles").fadeOut(300, function() {
@@ -70,37 +71,43 @@ $(".results").on("click",".reset",function() {
 
 allTiles.click(function() {
 	
-	
-	totalMoves+=1;
+	totalMoves+=1; // Including the move made by the user
+
 	if (currentPlayer==="Player 1") {
 		$(this).append("<h1>"+currentmark+"</h1>");
-		currentmark=player2mark;
 		$("#player2").slideDown("slow");
 		$("#player1").slideUp("slow");
 		player1Tiles[$(this).attr("id")]=1;
-		currentPlayer = "Player 2";
-		if ($(this).attr("id") in cornerTiles) {
-			cornerTiles.splice(cornerTiles.indexOf($(this).attr("id")),1);
-		}
-	}
-	else {
-		$("#player1").slideDown("slow");
-		$("#player2").slideUp("slow");
-		if (currentPlayMode==="2players") {
-			$(this).append("<h1>"+currentmark+"</h1>");
-			player2Tiles[$(this).attr("id")]=1;	
+		completeTiles.splice(completeTiles.indexOf($(this).attr("id")),1);
+
+		ans=checkResult();
+
+		if (currentPlayMode==="1player" && totalMoves!==9) {   // Runs if 1 Player Mode On 
+			currentmark=player2mark;
+			$("#player1").slideDown("slow");
+			$("#player2").slideUp("slow");
+			generatePosition(); 		// Generates correct position for the tile and displays it	
+			currentmark=player1mark;
+			totalMoves+=1;   // Includes the move of computer	
 		}
 		else {
-			generatePosition();     // Generates correct position for the tile and displays it
+			currentPlayer="Player 2";
+			currentmark = player2mark;
 		}
-
-		currentmark=player1mark;
-		currentPlayer= "Player 1";
 	}
-	ans=checkResult();	
+	else if (currentPlayMode==="2players" && currentPlayer==="Player 2") {
+		$("#player1").slideDown("slow");
+		$("#player2").slideUp("slow");
+		$(this).append("<h1>"+currentmark+"</h1>");
+		player2Tiles[$(this).attr("id")]=1;	
+		currentmark=player1mark;
+		currentPlayer="Player 1";
+	}
+	ans=checkResult();
 	if (!ans && totalMoves===9) {
 		player1Tiles={};
 		player2Tiles={};
+		completeTiles=["1","2","3","4","5","6","7","8","9"];
 		$(".playerBanner").slideUp("fast");
 		$(".results").empty();
 		$(".results").fadeIn(300,function() {
@@ -326,135 +333,144 @@ function invDiagnol(y,x) {
 
 
 function generatePosition() {
-	for (var i=0;i<Object.keys(player1Tiles).length;i++) {
-		if (findHorizontal(Object.keys(player1Tiles)[i]) || findVertical(Object.keys(player1Tiles)[i]) || findDiagnol(Object.keys(player1Tiles)[i]) || findInvDiagnol(Object.keys(player1Tiles)[i])) {
-			console.log("Found");
+	for (var i=0;i<Object.keys(player2Tiles).length;i++) {
+		if (findHorizontal(Object.keys(player2Tiles)[i],player2Tiles,player1Tiles) || findVertical(Object.keys(player2Tiles)[i],player2Tiles,player1Tiles) || findDiagnol(Object.keys(player2Tiles)[i],player2Tiles,player1Tiles) || findInvDiagnol(Object.keys(player2Tiles)[i],player2Tiles,player1Tiles)) {
+			
 			return;
 		}
 	}
+	for (var i=0;i<Object.keys(player1Tiles).length;i++) {
+		if (findHorizontal(Object.keys(player1Tiles)[i],player1Tiles,player2Tiles) || findVertical(Object.keys(player1Tiles)[i],player1Tiles,player2Tiles) || findDiagnol(Object.keys(player1Tiles)[i],player1Tiles,player2Tiles) || findInvDiagnol(Object.keys(player1Tiles)[i],player1Tiles,player2Tiles)) {
+			
+			return;
+		}
+	}
+
 	if (!(5 in player2Tiles || 5 in player1Tiles)) {
 			$("#5").append("<h1>"+currentmark+"</h1>");
-			player2Tiles["5"]=1;	
+			player2Tiles["5"]=1;
+			completeTiles.splice(completeTiles.indexOf("5"),1);
+			
 		}
 	else  {
-			var random = Math.round(Math.random()*(cornerTiles.length-1));
-			console.log(random);
-			$("#"+cornerTiles[random]).append("<h1>"+currentmark+"</h1>");
-			player2Tiles[cornerTiles[random]]=1;
-			cornerTiles.splice(random,1);
+			var random = Math.round(Math.random()*(completeTiles.length-1));
+			console.log(random,completeTiles);
+
+			$("#"+completeTiles[random]).append("<h1>"+currentmark+"</h1>");
+			player2Tiles[completeTiles[random]]=1;
+			completeTiles.splice(random,1);
 	}
 	
 }
 
-function findHorizontal(x) {
+function findHorizontal(x,currentlist,invcurrentlist) {
 	x=Number(x)
 	if (x%3===1) {
-		if (x+1 in player1Tiles && !(x+2 in player2Tiles)) {
+		if (x+1 in currentlist && !(x+2 in invcurrentlist || x+2 in currentlist)) {
 			return putmark(String(x+2));
 		}
-		else if (x+2 in player1Tiles && !(x+1 in player2Tiles)) {
+		else if (x+2 in currentlist && !(x+1 in invcurrentlist || x+1 in currentlist)) {
 			return putmark(String(x+1));
 		}
 	}
 	else if (x%3===2) {
-		if (x-1 in player1Tiles && !(x+1 in player2Tiles)) {
+		if (x-1 in currentlist && !(x+1 in invcurrentlist || x+1 in currentlist)) {
 			return putmark(String(x+1));
 		}
-		else if (x+1 in player1Tiles && !(x-1 in player2Tiles)) {
+		else if (x+1 in currentlist && !(x-1 in invcurrentlist || x-1 in currentlist)) {
 			return putmark(String(x-1));
 		}
 	}
 	else if (x%3===0) {
-		if (x-1 in player1Tiles && !(x-2 in player2Tiles)) {
+		if (x-1 in currentlist && !(x-2 in invcurrentlist || x-2 in currentlist)) {
 			return putmark(String(x-2));
 		}
-		else if (x-2 in player1Tiles && !(x-1 in player2Tiles)) {
+		else if (x-2 in currentlist && !(x-1 in invcurrentlist || x-1 in currentlist)) {
 			return putmark(String(x-1));
 		}
 	}
 
 }
-function findVertical(x) {
+function findVertical(x,currentlist,invcurrentlist) {
 	x=Number(x)
 	if (x===1 || x===2 || x===3) {
-		if (x+3 in player1Tiles && !(x+6 in player2Tiles)) {
-			console.log("yes");
+		if (x+3 in currentlist && !(x+6 in invcurrentlist || x+6 in currentlist)) {
 			return putmark(String(x+6));
 		}
-		else if (x+6 in player1Tiles &&  !(x+3 in player2Tiles)) {
+		else if (x+6 in currentlist &&  !(x+3 in invcurrentlist || x+3 in currentlist)) {
 			return putmark(String(x+3));
 		}	
 	}
 	else if (x===4 || x===5 || x===6) {
-		if (x-3 in player1Tiles && !(x+3 in player2Tiles)) {
+		if (x-3 in currentlist && !(x+3 in invcurrentlist || x+3 in currentlist)) {
 			return putmark(String(x+3));
 		}
-		else if (x+3 in player1Tiles && !(x-3 in player2Tiles)) {
+		else if (x+3 in currentlist && !(x-3 in invcurrentlist || x-3 in currentlist)) {
 			return putmark(String(x-3));
 		}
 	}
 	else if (x===7 || x===8 || x===9) {
-		if (x-3 in player1Tiles && !(x+3 in player2Tiles)) {
+		if (x-3 in currentlist && !(x+3 in invcurrentlist || x+3 in currentlist)) {
 			return putmark(String(x+3));
 		}
-		else if (x+3 in player1Tiles && !(x-3 in player2Tiles)) {
+		else if (x+3 in currentlist && !(x-3 in invcurrentlist || x-3 in currentlist)) {
 			return putmark(String(x-3));
 		}
 	}
 
 }
 
-function findDiagnol(x) {
+function findDiagnol(x,currentlist,invcurrentlist) {
 	x=Number(x)
 	if (x===1) {
-		if (5 in player1Tiles && !(9 in player2Tiles)) {
+		if (5 in currentlist && !(9 in invcurrentlist || 9 in currentlist)) {
 			return putmark("9");
 		}
-		else if (9 in player1Tiles && !(5 in player2Tiles)) {
+		else if (9 in currentlist && !(5 in invcurrentlist || 5 in currentlist)) {
 			return putmark("5");
 		}
 	}
 	else if (x===5) {
-		if (1 in player1Tiles && !(9 in player2Tiles)) {
+		if (1 in currentlist && !(9 in invcurrentlist || 9 in currentlist)) {
 			return putmark("9");
 		}
-		else if (9 in player1Tiles && !(1 in player2Tiles)) {
+		else if (9 in currentlist && !(1 in invcurrentlist || 1 in currentlist)) {
 			return putmark("1");
 		}
 	}
 	else if (x===9) {
-		if (5 in player1Tiles && !(1 in player2Tiles)) {
+		if (5 in currentlist && !(1 in invcurrentlist || 1 in currentlist)) {
 			return putmark("1");
 		}
-		else if (1 in player1Tiles && !(5 in player2Tiles)) {
+		else if (1 in currentlist && !(5 in invcurrentlist || 5 in currentlist)) {
 			return putmark("5");
 		}
 	}
 }
 
-function findInvDiagnol(x) {
+function findInvDiagnol(x,currentlist,invcurrentlist) {
 	x=Number(x)
 	if (x===3) {
-		if (5 in player1Tiles && !(7 in player2Tiles)) {
+		if (5 in currentlist && !(7 in invcurrentlist || 7 in currentlist)) {
 			return putmark("7");
 		}
-		else if (7 in player1Tiles && !(5 in player2Tiles)) {
+		else if (7 in currentlist && !(5 in invcurrentlist || 5 in currentlist)) {
 			return putmark("5");
 		}
 	}
 	else if (x===5) {
-		if (3 in player1Tiles && !(7 in player2Tiles)) {
+		if (3 in currentlist && !(7 in invcurrentlist || 7 in currentlist)) {
 			return putmark("7");
 		}
-		else if (7 in player1Tiles && !(3 in player2Tiles)) {
+		else if (7 in currentlist && !(3 in invcurrentlist || 3 in currentlist)) {
 			return putmark("3");
 		}
 	}
 	else if (x===7) {
-		if (5 in player1Tiles && !(3 in player2Tiles)) {
+		if (5 in currentlist && !(3 in invcurrentlist || 3 in currentlist)) {
 			return putmark("3");
 		}
-		else if (3 in player1Tiles && !(5 in player2Tiles)) {
+		else if (3 in currentlist && !(5 in invcurrentlist || 5 in currentlist)) {
 			return putmark("5");
 		}
 	}
@@ -462,9 +478,10 @@ function findInvDiagnol(x) {
 
 function putmark(x) {
 	$("#"+x).append("<h1>"+currentmark+"</h1>");
-	if (x in cornerTiles) {
-		cornerTiles.splice(cornerTiles.indexOf(x),1);
+	if (x in completeTiles) {
+		completeTiles.splice(completeTiles.indexOf(x),1);
 	}
 	player2Tiles[x]=1
+	completeTiles.indexOf(String(x),1);
 	return true;
 }
