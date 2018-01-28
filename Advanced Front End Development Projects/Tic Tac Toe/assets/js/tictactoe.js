@@ -7,6 +7,7 @@ var currentPlayer="Player 1";
 var player1Tiles={};
 var player2Tiles={};
 var ans=false;
+var cornerTiles=["1","3","7","9"];
 
 var allTiles = $(".tile");
 
@@ -78,6 +79,9 @@ allTiles.click(function() {
 		$("#player1").slideUp("slow");
 		player1Tiles[$(this).attr("id")]=1;
 		currentPlayer = "Player 2";
+		if ($(this).attr("id") in cornerTiles) {
+			cornerTiles.splice(cornerTiles.indexOf($(this).attr("id")),1);
+		}
 	}
 	else {
 		$("#player1").slideDown("slow");
@@ -324,13 +328,22 @@ function invDiagnol(y,x) {
 function generatePosition() {
 	for (var i=0;i<Object.keys(player1Tiles).length;i++) {
 		if (findHorizontal(Object.keys(player1Tiles)[i]) || findVertical(Object.keys(player1Tiles)[i]) || findDiagnol(Object.keys(player1Tiles)[i]) || findInvDiagnol(Object.keys(player1Tiles)[i])) {
+			console.log("Found");
 			return;
 		}
-		if (!(3 in player2Tiles)){
-			$("#3").append("<h1>"+currentmark+"</h1>");
-			player2Tiles["3"]=1;	
-		}
 	}
+	if (!(5 in player2Tiles || 5 in player1Tiles)) {
+			$("#5").append("<h1>"+currentmark+"</h1>");
+			player2Tiles["5"]=1;	
+		}
+	else  {
+			var random = Math.round(Math.random()*(cornerTiles.length-1));
+			console.log(random);
+			$("#"+cornerTiles[random]).append("<h1>"+currentmark+"</h1>");
+			player2Tiles[cornerTiles[random]]=1;
+			cornerTiles.splice(random,1);
+	}
+	
 }
 
 function findHorizontal(x) {
@@ -449,6 +462,9 @@ function findInvDiagnol(x) {
 
 function putmark(x) {
 	$("#"+x).append("<h1>"+currentmark+"</h1>");
+	if (x in cornerTiles) {
+		cornerTiles.splice(cornerTiles.indexOf(x),1);
+	}
 	player2Tiles[x]=1
 	return true;
 }
