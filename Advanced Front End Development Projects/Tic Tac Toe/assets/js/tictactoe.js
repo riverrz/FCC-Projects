@@ -79,9 +79,8 @@ allTiles.click(function() {
 		$("#player1").slideUp("slow");
 		player1Tiles[$(this).attr("id")]=1;
 		completeTiles.splice(completeTiles.indexOf($(this).attr("id")),1);
-		console.log(completeTiles);
 
-		ans=checkResult();
+		ans=checkResult();  // Checks if someone won
 
 		if (currentPlayMode==="1player" && totalMoves!==9) {   // Runs if 1 Player Mode On 
 			currentmark=player2mark;
@@ -96,7 +95,7 @@ allTiles.click(function() {
 			currentmark = player2mark;
 		}
 	}
-	else if (currentPlayMode==="2players" && currentPlayer==="Player 2") {
+	else if (currentPlayMode==="2players" && currentPlayer==="Player 2") {   // For 2 Player Mode
 		$("#player1").slideDown("slow");
 		$("#player2").slideUp("slow");
 		$(this).append("<h1>"+currentmark+"</h1>");
@@ -104,8 +103,10 @@ allTiles.click(function() {
 		currentmark=player1mark;
 		currentPlayer="Player 1";
 	}
-	ans=checkResult();
-	if (!ans && totalMoves===9) {
+
+	ans=checkResult();  // Checks if someone won
+
+	if (!ans && totalMoves===9) {     // If no one one reset all the moves and available moves
 		player1Tiles={};
 		player2Tiles={};
 		completeTiles=["1","2","3","4","5","6","7","8","9"];
@@ -127,36 +128,42 @@ allTiles.click(function() {
 	
 });
 
-function checkResult() {
+function checkResult() {           // Function to evaluate if someone won
 	var check=0;
 	if (Object.keys(player1Tiles).length<3 && Object.keys(player2Tiles).length<3) {
 		return;
 	}
-	for (var i=0;i<Object.keys(player1Tiles).length;i++) {
+
+	// To see if Player 1 won
+
+	for (var i=0;i<Object.keys(player1Tiles).length;i++) {      
 		if (checkHorizontal(1,Object.keys(player1Tiles)[i]) || checkVertical(1,Object.keys(player1Tiles)[i]) || mainDiagnol(1,Object.keys(player1Tiles)[i]) || invDiagnol(1,Object.keys(player1Tiles)[i])) {
-			$(".results").empty();
-			$(".results").fadeIn(800);
-			$(".results").append("Player 1 Won :D");
-			$(".results").append('<button class="reset">Play Again?</button>');
-			$(".playerBanner").slideUp("fast");
+			won("Player 1");
 			return true;
 
 		}
 	}
-	for (var i=0;i<Object.keys(player2Tiles).length;i++) {
+
+	// To see if Player 2 won
+
+	for (var i=0;i<Object.keys(player2Tiles).length;i++) {  
 		if (checkHorizontal(2,Object.keys(player2Tiles)[i]) || checkVertical(2,Object.keys(player2Tiles)[i]) || mainDiagnol(2,Object.keys(player2Tiles)[i]) || invDiagnol(2,Object.keys(player2Tiles)[i])) {
-			$(".results").empty();
-			$(".results").fadeIn(800);
-			$(".results").append("Player 2 Won :D");
-			$(".results").append('<button class="reset">Play Again?</button>');
-			$(".playerBanner").slideUp("fast");
+			won("Player 2");
 			return true;
 		}	
 	}
 	return false;
 }
 
-function checkHorizontal(y,x) {
+function won(winner) {			// Generates results page with winner's name
+	$(".results").empty();
+	$(".results").fadeIn(800);
+	$(".results").append(winner+" Won :D");
+	$(".results").append('<button class="reset">Play Again?</button>');
+	$(".playerBanner").slideUp("fast");
+}
+
+function checkHorizontal(y,x) {    	// Checks if any 3 horizontal tiles matches
 	if (y===1) {
 		var current=player1Tiles;	
 	}
@@ -165,42 +172,17 @@ function checkHorizontal(y,x) {
 	}
 
 	x=Number(x);
-
-	// For Left Most Tiles
-
 	if (x===1 || x===4 || x===7) {
-		if (x in current && x+1 in current && x+2 in current) {
+		if ( x in current && x+1 in current && x+2 in current) {
 			return true;
-		}
-		else {
-			return false;
 		}	
-
+	}
 	
-	}
-	//For Middle Tiles
-	else if (x===2 || x===5 || x===8) {
-		if (x in current && x-1 in current && x+1 in current) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	//For Right Most Tiles
-	else if (x===3 || x===6 || x===9) {
-		if (x in current && x-1 in current && x-2 in current) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
 	return false;
 }
 
-function checkVertical(y,x) {
+
+function checkVertical(y,x) {			// Checks if any 3 vertical tiles matches
 	if (y===1) {
 		var current=player1Tiles;	
 	}
@@ -209,42 +191,32 @@ function checkVertical(y,x) {
 	}
 
 	x=Number(x);
-
-	// For Top Most Tiles
-
 	if (x===1 || x===2 || x===3) {
 		if (x in current && x+3 in current && x+6 in current) {
 			return true;
-		}
-		else {
-			return false;
 		}	
-
+	}
 	
-	}
-	//For Middle Tiles
-	else if (x===4 || x===5 || x===6) {
-		if (x in current && x-3 in current && x+3 in current) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	//For Bottom Most Tiles
-	else if (x===7 || x===8 || x===9) {
-		if (x in current && x-3 in current && x-6 in current) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
 	return false;
 }
 
-function mainDiagnol(y,x) {
+
+function mainDiagnol(y,x) {			// Checks if the main diagnol has matching tiles 
+	if (y===1) {
+		var current=player1Tiles;	
+	}
+	else {
+		var current=player2Tiles;
+	}
+	x=Number(x)
+	if (x===1 && 1 in current && 5 in current && 9 in current) {
+		return true;
+	}
+	return false;	
+}
+
+
+function invDiagnol(y,x) {				// Checks if the reverse-main diagnol has matching tiles 
 	if (y===1) {
 		var current=player1Tiles;	
 	}
@@ -254,119 +226,42 @@ function mainDiagnol(y,x) {
 
 	x=Number(x);
 
-	// For Top-Left  Tile
-
-	if (x===1) {
-		if (x in current && x+4 in current && x+8 in current) {
-			return true;
-		}
-		else {
-			return false;
-		}	
-
-	
-	}
-	//For Middle Tile
-	else if (x===5) {
-		if (x in current && x-4 in current && x+4 in current) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	//For Bottom-Right  Tile
-	else if (x===9) {
-		if (x in current && x-4 in current && x-8 in current) {
-			return true;
-		}
-		else {
-			return false;
-		}
+	if (x===3 && 3 in current && 5 in current && 7 in current) {
+		return true;
 	}
 	return false;
 }
 
-function invDiagnol(y,x) {
-	if (y===1) {
-		var current=player1Tiles;	
-	}
-	else {
-		var current=player2Tiles;
-	}
+function generatePosition() {  		// Generates valid position in 1 Player Mode
 
-	x=Number(x);
-
-	// For Top-Right  Tile
-
-	if (x===3) {
-		if (x in current && x+2 in current && x+4 in current) {
-			return true;
-		}
-		else {
-			return false;
-		}	
-
-	
-	}
-	//For Middle Tile
-	else if (x===5) {
-		if (x in current && x-2 in current && x+2 in current) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	//For Right Most Tiles
-	else if (x===7) {
-		if (x in current && x-2 in current && x-4 in current) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	return false;
-}
-
-
-function generatePosition() {
-	for (var i=0;i<Object.keys(player2Tiles).length;i++) {
+	for (var i=0;i<Object.keys(player2Tiles).length;i++) {		// Generates based on its own current Tiles
 		if (findHorizontal(Object.keys(player2Tiles)[i],player2Tiles) || findVertical(Object.keys(player2Tiles)[i],player2Tiles) || findDiagnol(Object.keys(player2Tiles)[i],player2Tiles) || findInvDiagnol(Object.keys(player2Tiles)[i],player2Tiles)) {
-			console.log("Mine");
 			return;
 		}
 	}
-	for (var i=0;i<Object.keys(player1Tiles).length;i++) {
+	for (var i=0;i<Object.keys(player1Tiles).length;i++) {		// Generates based on Player 1's current Tiles
 		if (findHorizontal(Object.keys(player1Tiles)[i],player1Tiles) || findVertical(Object.keys(player1Tiles)[i],player1Tiles) || findDiagnol(Object.keys(player1Tiles)[i],player1Tiles) || findInvDiagnol(Object.keys(player1Tiles)[i],player1Tiles)) {
-			console.log("Found")
 			return;
 		}
 	}
 
-	if (!(5 in player2Tiles || 5 in player1Tiles)) {
+	if (!(5 in player2Tiles || 5 in player1Tiles)) { 			// Chooses Middle Tile if available and no 3 consecutive tiles.
 			$("#5").append("<h1>"+currentmark+"</h1>");
 			player2Tiles["5"]=1;
-			console.log("Middle")
 			completeTiles.splice(completeTiles.indexOf("5"),1);
 			
 		}
-	else  { 
-			var random = Math.round(Math.random()*(completeTiles.length-1));
-			
+	else  { 													// Chooses any random tiles if middle is not available and no 3 consecutive tiles are available										
 
+			var random = Math.round(Math.random()*(completeTiles.length-1));
 			$("#"+completeTiles[random]).append("<h1>"+currentmark+"</h1>");
 			player2Tiles[completeTiles[random]]=1;
 			completeTiles.splice(random,1);
-			console.log("Random",random,completeTiles);
 	}
 	
 }
 
-function findHorizontal(x,currentlist) {
+function findHorizontal(x,currentlist) {				// Finds a horizontal candidate tile 
 	x=Number(x)
 	if (x%3===1) {
 		if (x+1 in currentlist && completeTiles.indexOf(String(x+2))!==-1) {
@@ -394,7 +289,7 @@ function findHorizontal(x,currentlist) {
 	}
 
 }
-function findVertical(x,currentlist) {
+function findVertical(x,currentlist) {				// Finds a vertical candidate tile
 	x=Number(x)
 	if (x===1 || x===2 || x===3) {
 		if (x+3 in currentlist && completeTiles.indexOf(String(x+6))!==-1) {
@@ -423,7 +318,7 @@ function findVertical(x,currentlist) {
 
 }
 
-function findDiagnol(x,currentlist) {
+function findDiagnol(x,currentlist) {				// Finds a diagnol candidate tile
 	x=Number(x)
 	if (x===1) {
 		if (5 in currentlist && completeTiles.indexOf(String(9))!==-1) {
@@ -451,7 +346,7 @@ function findDiagnol(x,currentlist) {
 	}
 }
 
-function findInvDiagnol(x,currentlist) {
+function findInvDiagnol(x,currentlist) {				// Finds a reverse-diagnol candidate tile
 	x=Number(x)
 	if (x===3) {
 		if (5 in currentlist && completeTiles.indexOf(String(7))!==-1) {
@@ -479,10 +374,9 @@ function findInvDiagnol(x,currentlist) {
 	}
 }
 
-function putmark(x) {
+function putmark(x) {								// Generates Tile based on decision 
 	$("#"+x).append("<h1>"+currentmark+"</h1>");
 	player2Tiles[x]=1
 	completeTiles.splice(completeTiles.indexOf(x),1);
-	console.log(completeTiles);
 	return true;
 }
