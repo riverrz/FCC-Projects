@@ -1,25 +1,27 @@
-var quotesData = {
-	1: {
-		quotes:"Never Give UP",
-		author: "xyz",
-		color: "#3f3f3f"
-	},
-	2: {
-		quotes: "Say Bye",
-		author: "abc",
-		color: "#2be3cf"
-	}
+
+var tweet="";
+var tweetUrl="";
+function generateQuote() {
+	$.ajax({
+          url: 'https://andruxnet-random-famous-quotes.p.mashape.com/?cat=movies',
+          headers: {
+            'X-Mashape-Key': 'O7iTZLDUmYmshesEET9FNisKTATLp1o1RWdjsnVv0D9SKqXw9w'
+          },
+          method: 'GET',
+          dataType: 'json',
+          contentType: 'application/x-www-form-urlencoded',
+          success : function(data){
+          	$("h1").text('"   '+data.quote);
+			$("span").text(data.author);
+			responsiveVoice.speak(data.quote);
+			responsiveVoice.speak("By "+data.author);
+			tweet = data.quote;
+			tweetUrl = "https://twitter.com/intent/tweet?text='" + tweet + "'";
+			$("#tweet").attr("href", tweetUrl);
+          }
+	});	
 }
 
-function generateQuote() {
-	responsiveVoice.speak("Today's quote is ");
-	var random=Math.ceil(Math.random()*2);
-	$("h1").text('"   '+quotesData[random].quotes);
-	$("span").text(quotesData[random].author);
-	$("body").css("backgroundColor" , quotesData[random].color);
-	responsiveVoice.speak(quotesData[random].quotes);
-	responsiveVoice.speak("By "+quotesData[random].author);
-}
 
 // Quotes when the page loads
 generateQuote();
@@ -28,3 +30,4 @@ generateQuote();
 $("#new").on("click", function() {
 	generateQuote();
 });
+
