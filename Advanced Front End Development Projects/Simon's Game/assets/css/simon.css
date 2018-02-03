@@ -1,5 +1,5 @@
 body {
-	background-color: black;
+	background: url("http://www.kubipet.com/data/out/189/iwp780830286-wood-grain-wallpapers.jpg");
 	color: white;
 	height: 100%;
 }
@@ -46,6 +46,7 @@ span {
 	width: 30%;
 	border-radius: 50%;
 }
+
 .left {
 	float: left;
 }
@@ -53,17 +54,21 @@ span {
 	float: right;
 }
 .red {
-	background-color: #ff4d4d;
+	background-color:  #330000;
 }
+
 .green {
-	background-color: #79ff4d;
+	background-color: #1a3300;
 }
+
 .blue {
-	background-color: #4d79ff;
+	background-color: #000033;
 }
+
 .yellow {
-	background-color: #ffff4d;
+	background-color: #666600;
 }
+
 #controls {
 	background-color: inherit;
 	text-align: center;
