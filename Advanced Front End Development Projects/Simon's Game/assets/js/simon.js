@@ -15,7 +15,6 @@ var sounds = [
 	"/home/shivam/Desktop/FCC-Projects/Advanced Front End Development Projects/Simon's Game/assets/audio/sound2.mp3", 
 	"/home/shivam/Desktop/FCC-Projects/Advanced Front End Development Projects/Simon's Game/assets/audio/sound3.mp3", 
 	"/home/shivam/Desktop/FCC-Projects/Advanced Front End Development Projects/Simon's Game/assets/audio/sound4.mp3", 
-	
 ];
 
 
@@ -23,10 +22,12 @@ $("#start").on("click", function() {
 	started=true;
 	putcount();
 	generateSequence();
+	displaySequence();
 });
 
 $("#strict").on("click", function() {
-	strict_mode=true;
+	strict_mode= !(strict_mode);
+	$(this).toggleClass("selected");
 });
 
 $(".tile").on('click' , function() {
@@ -52,9 +53,12 @@ $(".tile").on("mouseup", function() {
 function generateSequence() {
 	var random=String(Math.round(Math.random()*3));
 	sequence.push(random);
-	displaySequence();
 };
 function results(tileClicked) {
+	if (!started) {
+		return;
+	}
+
 	if (sequence[current]===tileClicked) {
 		current+=1
 		if (current>=sequence.length) {
@@ -74,16 +78,18 @@ function results(tileClicked) {
 			}
 			current=0;
 			generateSequence();
+			displaySequence();
 		}
 		
 	}
 	else if (strict_mode) {
 		reset();
 		generateSequence();
+		mismatch();
 	}
 	else {
 		current=0;
-		displaySequence();
+		mismatch();
 	}
 };
 function reset() {
@@ -98,6 +104,7 @@ function putcount() {
 };
 
 function displaySequence() {
+	putcount();
 	if (!started) {
 		return;
 	}
@@ -118,4 +125,14 @@ function displaySequence() {
 		
 	},1500);
 
+};
+
+function mismatch() {
+	var check=0;
+	$("#count").text("--");
+	var audio = new Audio("/home/shivam/Desktop/FCC-Projects/Advanced Front End Development Projects/Simon's Game/assets/audio/wrong.mp3");
+	audio.play();
+	setTimeout(function() {
+		displaySequence();
+	}, 1000); 
 };
