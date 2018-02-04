@@ -10,16 +10,22 @@ button {
 	outline: none;
 	background-color: inherit;
 	border: none;
-	color: white;
+	color: steelblue;
 	cursor: pointer;
 	font-size: 24px;
 	margin-right: 10px;
 }
 span {
 	display: inline-block;
+	background-color: black;
+	height: 35px;
+	border-radius: 25%;
+	width: 40px;
+	padding: 2px;
+	text-align: center; 
 	margin-right: 10px;
-	color: white;
-	font-size: 24px;
+	color: red;
+	font-size: 28px;
 }
 .container {
 	background-color: inherit;
@@ -59,7 +65,7 @@ span {
 }
 
 .green {
-	background-color: #1a3300;
+	background-color: #006600;
 }
 
 .blue {
