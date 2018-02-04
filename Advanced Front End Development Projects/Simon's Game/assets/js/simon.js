@@ -35,7 +35,7 @@ function generateSequence() {
 	var random=String(Math.round(Math.random()*3));
 	sequence.push(random);
 	console.log(sequence);
-	// displaySequence();
+	displaySequence();
 };
 function results(tileClicked) {
 	if (sequence[current]===tileClicked) {
@@ -44,7 +44,14 @@ function results(tileClicked) {
 			game_length+=1
 			putcount();
 			if (game_length===20) {
-				console.log("Won the Game!");
+				$(".row").fadeOut("slow", function() {
+					$(".winning_page").fadeIn("slow", function() {
+						$(".winning_page").fadeOut("slow", function() {
+							reset();
+							$(".row").fadeIn("slow");
+						});
+					});
+				});
 				return;
 			}
 			current=0;
@@ -53,13 +60,38 @@ function results(tileClicked) {
 		
 	}
 	else if (strict_mode) {
-		game_length=0;
-		current=0;
-		sequence=[];
-		putcount();
+		reset();
 		generateSequence();
 	}
+	else {
+		current=0;
+		displaySequence();
+	}
 };
+function reset() {
+	game_length=0;
+	current=0;
+	sequence=[];
+	putcount();
+};
+
 function putcount() {
 	$("#count").text(game_length);
-}
+};
+
+function displaySequence() {
+	var count = 0;
+	var index;
+	var close=setInterval(function(){
+		index=sequence[count];
+		$("#"+index).css("background", colors[Number(index)][1]);
+		setTimeout(function(){$("#"+index).css("background", colors[Number(index)][0]);},650);
+		count+=1;
+		console.log("yes");
+		if (count===sequence.length) {
+			clearInterval(close);
+		}
+		
+	},1500);
+
+};
