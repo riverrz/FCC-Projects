@@ -3,21 +3,53 @@ html, body {
 }
 
 ul {
+	padding: 0;
+	margin: 0;
 	list-style: none;
 }
+
 h1 {
 	margin-left: 3%;
+	width: 90%;
 }
 img {
 	width: 40px;
 	height: 40px;
 }
+li {
+	display: block;
+	color: white;
+	margin-bottom: 3px;
+	width: 10px;
+	overflow: hidden;
+	transition: width 0.3s linear;
+}
+li:hover {
+	width: 70px;
+}
+
 .container {
 	background-color: gray;
 	width: 40%;
 	height: 10%;
-	margin: 0 30% 3px 30%;
+	margin: 3px 30% 3px 30%;
 	padding: 1% 0 1% 1%;
+}
+.text-header {
+	height: 100%;
+	width: 41%;
+	margin-bottom: 3px;
+	position: absolute;
+	left: 30%;
+	text-align: center;
+	padding-top: 1.5%;
+	box-sizing: border-box;
+	background-color: gray;
+}
+.header {
+	height: 15%;
+	width: 100%;
+	position: relative;
 }
 .logo {
 	display: inline-block;
@@ -36,7 +68,7 @@ img {
 	text-align: center;
 }
 .status {
-	/*padding-top: 5%;*/
+	padding-top: 2%;
 	display: inline-block;
 	height: 100%;
 	float: right;
@@ -48,12 +80,21 @@ img {
 	float: left;
 	margin: 0;
 	padding: 0;
-	width: 80%;
+	width: 100%;
 }
 
 #icons {
-	float: right;
-	text-align: right;
-	margin: 0;
+	margin-top: 3%;
 	width: 20%;
+	position: absolute;
+	left: 71.1%;
+}
+#All {
+	background-color: blue;
+}
+#Online {
+	background-color: green;
+}
+#Offline {
+	background-color: gray;
 }

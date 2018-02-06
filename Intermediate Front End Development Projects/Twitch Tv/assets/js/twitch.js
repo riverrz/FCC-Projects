@@ -151,13 +151,15 @@ function render(index,type) {
 	$("body").append('<div class="container channels" id="'+index+'"><div class="logo"></div><div class="name"></div><div class="status"></div></div>');
 
 	if (type==="online") {
+		$("#"+String(index)).css("background-color","green");
 		$("#"+String(index)+" .logo").append("<img src='"+data[index].stream.logo+"'>");
 		$("#"+String(index)+" .name").append("<a href='"+data[index].stream._links.self+"'>"+data[index].stream.display_name+"</a>");
-		$("#"+String(index)+" .status").append(data[index].stream.game+":  "+data[index].stream.status);	
+		$("#"+String(index)+" .status").append("<em><strong>"+data[index].stream.game+"</strong></em>"+":  "+data[index].stream.status);	
 	}
 	else {
 		$("#"+String(index)+" .logo").append("<img src='"+data[index].default_pic+"'>");
 		$("#"+String(index)+" .name").append("<a href='"+data[index]._links.channel+"'>"+data[index].display_name+"</a>");
+		$("#"+String(index)+" .status").append("<em><strong>Not available</strong></em>");
 	}
 	
 }
